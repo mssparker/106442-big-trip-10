@@ -1,25 +1,20 @@
-export const createFilterTemplate = () =>
-  `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-      <span class="trip-sort__item  trip-sort__item--day">Day</span>
+const createFilterMarkup = (filter, isChecked) => {
+  return (
+    `<div class="trip-filters__filter">
+        <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything" ${isChecked ? `checked` : ``}>
+        <label class="trip-filters__filter-label" for="filter-${filter.name}">${filter.name}</label>
+      </div>`
+  );
+};
 
-      <div class="trip-sort__item  trip-sort__item--event">
-        <input id="sort-event" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-event">
-        <label class="trip-sort__btn" for="sort-event">Event</label>
-      </div>
+export const createFilterTemplate = (filters) => {
+  const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, i === 0)).join(``);
 
-      <div class="trip-sort__item  trip-sort__item--time">
-        <input id="sort-time" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-time" checked>
-        <label class="trip-sort__btn  trip-sort__btn--active  trip-sort__btn--by-increase" for="sort-time">
-          Time
-        </label>
-      </div>
-
-      <div class="trip-sort__item  trip-sort__item--price">
-        <input id="sort-price" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-price">
-        <label class="trip-sort__btn" for="sort-price">
-          Price
-        </label>
-      </div>
-
-      <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
-    </form>`;
+  return (
+    `<form class="trip-filters" action="#" method="get">
+        ${filtersMarkup}
+  
+        <button class="visually-hidden" type="submit">Accept filter</button>
+      </form>`
+  );
+};
