@@ -29,6 +29,12 @@ const generateDescription = (qty) => {
   return randomDescriptions.join(` `);
 };
 
+const getRandomWaypointType = (types) => {
+  const randomType = getRandomArrayItem(Object.keys(types));
+
+  return getRandomArrayItem(types[randomType]);
+};
+
 const generatePictures = (qty) => {
   const pictures = [];
 
@@ -127,9 +133,14 @@ const createFakeTime = () => {
 };
 
 const generateEvent = () => {
+  const startTime = getRandomDate();
+  const duration = getRandomIntegerNumber(30, 120) * 60 * 1000;
+  const endTime = new Date(startTime.valueOf() + duration);
+
   return {
-    date: getRandomDate(),
-    type: getRandomArrayItem(EventTypes),
+    startTime,
+    endTime,
+    type: getRandomWaypointType(EventTypes),
     city: getRandomArrayItem(Cities),
     offers: new Set(generateOptions(getRandomIntegerNumber(0, 3))),
     description: generateDescription(getRandomIntegerNumber(1, 4)),

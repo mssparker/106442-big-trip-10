@@ -8,7 +8,7 @@ const createFilterMarkup = (filter, isChecked) => {
 };
 
 export const createFilterTemplate = (filters) => {
-  const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, i === 0)).join(`\n`);
+  const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, i === 0)).join(``);
 
   return (
     `<form class="trip-filters" action="#" method="get">

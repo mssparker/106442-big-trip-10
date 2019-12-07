@@ -5,11 +5,9 @@ const filterNames = [
 ];
 
 const generateFilters = () => {
-  return filterNames.map((filter) => {
-    return {
-      name: filter
-    };
-  });
+  return filterNames.map((filter) => ({
+    name: filter
+  }));
 };
 
 export {generateFilters};
