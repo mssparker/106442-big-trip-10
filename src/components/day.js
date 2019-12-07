@@ -1,10 +1,11 @@
+import {formatDatePart} from "../utils";
 import {createEventTemplate} from './event';
 
 export const createDayTemplate = (date, dayCards) => {
   const targetDate = new Date(date);
-  const day = new Intl.DateTimeFormat(`en-US`, {day: `numeric`}).format(targetDate);
-  const month = new Intl.DateTimeFormat(`en-US`, {month: `short`}).format(targetDate);
-  const year = new Intl.DateTimeFormat(`en-US`, {year: `2-digit`}).format(targetDate);
+  const day = formatDatePart(targetDate, `day`);
+  const month = formatDatePart(targetDate, `month`);
+  const year = formatDatePart(targetDate, `year`);
   const eventsTemplate = dayCards.map((card) => createEventTemplate(card)).join(``);
 
   return (
