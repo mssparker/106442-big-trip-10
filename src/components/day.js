@@ -1,22 +1,40 @@
-import {formatDatePart} from "../utils";
-import {createEventTemplate} from './event';
+import {createElement, formatDatePart} from '../utils';
 
-export const createDayTemplate = (date, dayCards) => {
-  const targetDate = new Date(date);
-  const day = formatDatePart(targetDate, `day`);
-  const month = formatDatePart(targetDate, `month`);
-  const year = formatDatePart(targetDate, `year`);
-  const eventsTemplate = dayCards.map((card) => createEventTemplate(card)).join(``);
+const createDayTemplate = (date) => {
+  const day = formatDatePart(date, `day`);
+  const month = formatDatePart(date, `month`);
+  const year = formatDatePart(date, `year`);
 
   return (
     `<li class="trip-days__item  day">
       <div class="day__info">
         <span class="day__counter">${day}</span>
-        <time class="day__date" datetime="2019-03-18">${month} ${year}</time>
+        <time class="day__date" datetime="${year}-${month}-${day}">${month} ${year}</time>
       </div>
-      <ul class="trip-events__list">
-        ${eventsTemplate}
-      </ul>
+      <ul class="trip-events__list"></ul>
      </li>`
   );
 };
+
+export default class Day {
+  constructor(date) {
+    this._date = date;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createDayTemplate(this._date);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

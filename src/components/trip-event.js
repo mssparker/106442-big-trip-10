@@ -1,4 +1,6 @@
-export const createEventTemplate = (event) => {
+import {createElement} from '../utils';
+
+const createEventTemplate = (event) => {
   const {type, estimatedTime, offers} = event;
   const extraOptions = [...offers].map((offer) =>
     `<li class="event__offer">
@@ -38,3 +40,27 @@ export const createEventTemplate = (event) => {
       </div>
     </li>`);
 };
+
+export default class TripEvent {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEventTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+

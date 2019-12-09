@@ -1,8 +1,9 @@
-import {formatDate, getFirst, getLast} from '../utils';
+import {createElement, formatDate, getFirst, getLast} from '../utils';
 
 const getCitiesTemplate = (events) => {
   const cities = events.map(({city}) => city);
-  if (cities.length > 3) {
+  const maxVisibleCities = cities.length > 3;
+  if (maxVisibleCities) {
     const departureCity = getFirst(cities);
     const destinationCity = getLast(cities);
     return `${departureCity} &mdash; ... &mdash; ${destinationCity}`;
@@ -10,7 +11,7 @@ const getCitiesTemplate = (events) => {
   return cities.map((city) => `${city}`).join(`&mdash`);
 };
 
-export const createInfoTemplate = (events) => {
+const createInfoTemplate = (events) => {
   const sortingCards = events.sort((a, b) => a.startTime - b.startTime);
   const citiesTemplate = getCitiesTemplate(sortingCards);
 
@@ -25,3 +26,26 @@ export const createInfoTemplate = (events) => {
     </div>`
   );
 };
+
+export default class Info {
+  constructor(events) {
+    this._events = events;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createInfoTemplate(this._events);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
