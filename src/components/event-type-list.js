@@ -1,8 +1,8 @@
-import {EventTypes} from '../const.js';
+import {eventTypes} from '../const.js';
 
 export const createEventListTypesTemplate = (selected) => {
-  const transfers = EventTypes.hasOwnProperty(`TRANSFER`) && EventTypes[`TRANSFER`];
-  const activities = EventTypes.hasOwnProperty(`ACTIVITY`) && EventTypes[`ACTIVITY`];
+  const transfers = eventTypes.hasOwnProperty(`TRANSFER`) && eventTypes[`TRANSFER`];
+  const activities = eventTypes.hasOwnProperty(`ACTIVITY`) && eventTypes[`ACTIVITY`];
   const transfersList = transfers.map((type) => (
     `<div class="event__type-item">
         <input id="event-type-${type.id}-1" class="event__type-input  visually-hidden" type="radio" name="${type.id}" value="${type.id}" checked="${type.id === selected}">

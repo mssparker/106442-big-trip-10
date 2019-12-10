@@ -1,4 +1,4 @@
-export const EventTypes = {
+export const eventTypes = {
   TRANSFER: [
     {
       title: `Bus to`,

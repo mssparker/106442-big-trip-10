@@ -1,6 +1,7 @@
-import {EventTypes} from '../const.js';
+import {eventTypes} from '../const.js';
 import {castTimeFormat, getRandomArrayItem, getRandomIntegerNumber, getRandomDate} from '../utils.js';
 
+const EVENT_COUNT = 12;
 
 const generateOptions = (qty) => {
   const randomOffers = [];
@@ -121,7 +122,7 @@ const generateEvent = () => {
   return {
     startTime,
     endTime,
-    type: getRandomWaypointType(EventTypes),
+    type: getRandomWaypointType(eventTypes),
     city: getRandomArrayItem(Cities),
     offers: new Set(generateOptions(getRandomIntegerNumber(0, 3))),
     description: generateDescription(getRandomIntegerNumber(1, 4)),
@@ -138,3 +139,7 @@ const generateEvents = (count) => {
 };
 
 export {generateEvent, generateEvents};
+
+const events = generateEvents(EVENT_COUNT);
+
+export {events};

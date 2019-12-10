@@ -1,3 +1,5 @@
+import {createElement} from '../utils';
+
 const sortItems = [
   {
     id: `event`,
@@ -28,7 +30,7 @@ const getSortListTemplate = (items) => items.map(({id, title}, index) => {
     </div>`;
 }).join(``);
 
-export const createSortTemplate = () => {
+const createSortTemplate = () => {
   const sortListTemplate = getSortListTemplate(sortItems);
 
   return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
@@ -37,3 +39,25 @@ export const createSortTemplate = () => {
       <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
     </form>`;
 };
+
+export default class Sort {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSortTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

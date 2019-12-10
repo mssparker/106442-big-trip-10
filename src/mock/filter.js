@@ -10,4 +10,6 @@ const generateFilters = () => {
   }));
 };
 
-export {generateFilters};
+const filters = generateFilters();
+
+export {filters};
