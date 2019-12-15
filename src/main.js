@@ -4,6 +4,7 @@ import Filter from './components/filter';
 import Sort from './components/sort';
 import TripEvent from './components/trip-event';
 import TripEventEdit from './components/trip-event-edit';
+import NoTripEventMessage from './components/no-trip-event-message';
 import Day from './components/day';
 import DayList from './components/day-list';
 import {createTotalCostTemplate} from './components/totalCost';
@@ -11,6 +12,7 @@ import {createTotalCostTemplate} from './components/totalCost';
 import {events} from './mock/event.js';
 import {filters} from './mock/filter.js';
 import {render, renderPosition, getDate} from './utils';
+
 
 const renderRoute = (eventList, event) => {
   const tripEvent = new TripEvent(event);
@@ -49,20 +51,29 @@ const siteMainHeaderMenu = document.querySelectorAll(`.trip-controls h2`);
 const siteMainBody = document.querySelector(`.trip-events`);
 const dayListElement = new DayList();
 
-render(siteMainHeaderInfo, new Info(events), renderPosition.AFTERBEGIN);
+
 render(siteMainHeaderMenu[0], new Menu(), renderPosition.AFTEREND);
 render(siteMainHeaderMenu[1], new Filter(filters), renderPosition.AFTEREND);
-render(siteMainBody, new Sort());
 
-render(siteMainBody, dayListElement);
+const hasEvents = () => {
+  if (events.length !== 0) {
+    render(siteMainHeaderInfo, new Info(events), renderPosition.AFTERBEGIN);
+    render(siteMainBody, new Sort());
+    render(siteMainBody, dayListElement);
 
-const days = [...new Set(events.map((event) => getDate(event.startTime)))];
+    events.map((event) => {
+      const time = getDate(event.startTime);
+      const dayElement = new Day(time);
 
-days.forEach((day) => {
-  const dayElement = new Day(day);
-  render(dayListElement.getElement(), dayElement);
-  const eventList = dayElement.getElement().querySelector(`.trip-events__list`);
-  events.filter((event) => getDate(event.startTime) === day).forEach((event) => renderRoute(eventList, event));
-});
+      render(dayListElement.getElement(), dayElement);
+      const eventList = dayElement.getElement().querySelector(`.trip-events__list`);
+      events.map((point) => renderRoute(eventList, point));
+      renderRoute(eventList, event);
+    });
+    createTotalCostTemplate(events);
+  } else {
+    render(siteMainBody, new NoTripEventMessage());
+  }
+};
 
-createTotalCostTemplate(events);
+hasEvents();
