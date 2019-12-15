@@ -1,7 +1,7 @@
 import {eventTypes} from '../const.js';
 import {castTimeFormat, getRandomArrayItem, getRandomIntegerNumber, getRandomDate} from '../utils.js';
 
-const EVENT_COUNT = 12;
+const EVENT_COUNT = Object.values(eventTypes).reduce((sum, current) => sum + current.length, 0);
 
 const generateOptions = (qty) => {
   const randomOffers = [];
@@ -132,8 +132,8 @@ const generateEvent = () => {
   };
 };
 
-const generateEvents = (count) => {
-  return new Array(count)
+const generateEvents = () => {
+  return new Array(getRandomIntegerNumber(3, EVENT_COUNT))
     .fill(``)
     .map(generateEvent);
 };
