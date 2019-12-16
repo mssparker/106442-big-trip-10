@@ -1,5 +1,5 @@
 import {eventTypes} from '../const.js';
-import {castTimeFormat, getRandomArrayItem, getRandomIntegerNumber, getRandomDate} from '../utils.js';
+import {castTimeFormat, getRandomArrayItem, getRandomIntegerNumber, getRandomDate} from '../utils/utils.js';
 
 const EVENT_COUNT = Object.values(eventTypes).reduce((sum, current) => sum + current.length, 0);
 

@@ -1,4 +1,5 @@
-import {createElement, formatDatePart} from '../utils';
+import AbstractComponent from './abstract-component';
+import {formatDatePart} from '../utils/utils';
 
 const createDayTemplate = (date) => {
   const day = formatDatePart(date, `day`);
@@ -16,25 +17,13 @@ const createDayTemplate = (date) => {
   );
 };
 
-export default class Day {
+export default class Day extends AbstractComponent {
   constructor(date) {
+    super();
     this._date = date;
-    this._element = null;
   }
 
   getTemplate() {
     return createDayTemplate(this._date);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

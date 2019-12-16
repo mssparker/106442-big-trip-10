@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractComponent from './abstract-component';
 
 const createEventEditTemplate = (event) => {
   const {type} = event;
@@ -86,25 +86,19 @@ const createEventEditTemplate = (event) => {
     </li>`);
 };
 
-export default class TripEventEdit {
+export default class TripEventEdit extends AbstractComponent {
   constructor(event) {
+    super();
     this._event = event;
-    this._element = null;
   }
 
   getTemplate() {
     return createEventEditTemplate(this._event);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setSubmitHandler(handler) {
+    this.getElement()
+      .querySelector(`.event--edit`)
+      .addEventListener(`submit`, handler);
   }
 }
