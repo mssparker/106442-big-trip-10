@@ -1,4 +1,5 @@
-import {createElement, formatDate, getFirst, getLast} from '../utils';
+import AbstractComponent from './abstract-component';
+import {formatDate, getFirst, getLast} from '../utils/utils';
 
 const getCitiesTemplate = (events) => {
   const cities = events.map(({city}) => city);
@@ -27,25 +28,13 @@ const createInfoTemplate = (events) => {
   );
 };
 
-export default class Info {
+export default class Info extends AbstractComponent {
   constructor(events) {
+    super();
     this._events = events;
-    this._element = null;
   }
 
   getTemplate() {
     return createInfoTemplate(this._events);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
