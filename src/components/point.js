@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component';
 
-const createEventTemplate = (event) => {
+const createPointTemplate = (event) => {
   const {type, estimatedTime, offers} = event;
   const extraOptions = [...offers].map((offer) =>
     `<li class="event__offer">
@@ -41,17 +41,18 @@ const createEventTemplate = (event) => {
     </li>`);
 };
 
-export default class TripEvent extends AbstractComponent {
-  constructor(event) {
+export default class Point extends AbstractComponent {
+  constructor(point) {
     super();
-    this._event = event;
+
+    this._point = point;
   }
 
   getTemplate() {
-    return createEventTemplate(this._event);
+    return createPointTemplate(this._point);
   }
 
-  setEditHandler(handler) {
+  setEditButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.event__rollup-btn`)
       .addEventListener(`click`, handler);
