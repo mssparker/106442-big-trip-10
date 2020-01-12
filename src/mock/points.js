@@ -1,7 +1,7 @@
 import {eventTypes} from '../const.js';
 import {castTimeFormat, getRandomArrayItem, getRandomIntegerNumber, getRandomDate} from '../utils/utils.js';
 
-const EVENT_COUNT = Object.values(eventTypes).reduce((sum, current) => sum + current.length, 0);
+const EVENT_COUNT = eventTypes.length;
 
 const generateOptions = (qty) => {
   const randomOffers = [];
@@ -19,12 +19,6 @@ const generateDescription = (qty) => {
     randomDescriptions.push(getRandomArrayItem(DescriptionItems));
   }
   return randomDescriptions.join(` `);
-};
-
-const getRandomWaypointType = (types) => {
-  const randomType = getRandomArrayItem(Object.keys(types));
-
-  return getRandomArrayItem(types[randomType]);
 };
 
 const generatePictures = (qty) => {
@@ -114,7 +108,7 @@ const createFakeTime = () => {
   };
 };
 
-const generateEvent = () => {
+const generatePoint = () => {
   const startTime = getRandomDate();
   const duration = getRandomIntegerNumber(30, 120) * 60 * 1000;
   const endTime = new Date(startTime.valueOf() + duration);
@@ -122,24 +116,23 @@ const generateEvent = () => {
   return {
     startTime,
     endTime,
-    type: getRandomWaypointType(eventTypes),
+    type: getRandomArrayItem(eventTypes),
     city: getRandomArrayItem(Cities),
     offers: new Set(generateOptions(getRandomIntegerNumber(0, 3))),
     description: generateDescription(getRandomIntegerNumber(1, 4)),
     pictures: generatePictures(getRandomIntegerNumber(1, 7)),
     cost: getRandomIntegerNumber(10, 100),
-    estimatedTime: createFakeTime()
+    estimatedTime: createFakeTime(),
+    isFavored: false
   };
 };
 
-const generateEvents = () => {
-  return new Array(getRandomIntegerNumber(3, EVENT_COUNT))
+const generatePoints = (count) => {
+  return new Array(getRandomIntegerNumber(3, count))
     .fill(``)
-    .map(generateEvent);
+    .map(generatePoint);
 };
 
-export {generateEvent, generateEvents};
+export {generatePoint, generatePoints};
 
-const events = generateEvents(EVENT_COUNT);
-
-export {events};
+export const points = generatePoints(EVENT_COUNT);
